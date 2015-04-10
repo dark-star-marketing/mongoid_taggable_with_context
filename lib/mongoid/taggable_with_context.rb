@@ -108,7 +108,7 @@ module Mongoid::TaggableWithContext
       # 0) Tags must be an array or a string
       raise InvalidTagsFormat unless value.is_a?(Array) || value.is_a?(String)
       # 1) convert String to Array
-      value = value.class == Array ? value[0] : value
+      value = value.is_a?(Array) && value[0].include?(",") ? value[0] : value
       value = value.split(get_tag_separator_for(context)) if value.is_a? String
       # 2) remove all nil values
       # 3) strip all white spaces. Could leave blank strings (e.g. foo, , bar, baz)
